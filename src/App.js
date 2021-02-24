@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from "react";
 import MobileView from "./mobileview.js";
 import {ToggleButton} from "@material-ui/lab";
-import { TextField } from '@material-ui/core';
+import {  TextField } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,6 +15,7 @@ function App() {
   const [launchYr, setlaunchYr] = useState(); 
 const [successLaunch, setsuccessLaunch] = useState(false);
 const [successLand, setsuccessLand] = useState(false);
+const [navToggle, setnavToggle] = useState(false);
 
   const createDiv = (row) => {
     return(
@@ -49,25 +50,27 @@ useEffect(() => {
     }
   }
 
+
+
 useEffect(() => {
   if(successLand){
     // setsuccessLaunch(false);
-    seturl("https://api.spacexdata.com/v3/launches?limit=100&launch_success=true&land_success=true")}
+    seturl(`https://api.spacexdata.com/v3/launches?limit=100&launch_success=true&land_success=true&launch_year=${launchYr}`)}
 
   else if(successLaunch){
-    seturl("https://api.spacexdata.com/v3/launches?limit=100&launch_success=true");
+    seturl(`https://api.spacexdata.com/v3/launches?limit=100&launch_success=true&launch_year=${launchYr}`);
   }
 
-  else if(!successLaunch && !successLand){seturl('https://api.spacexdata.com/v3/launches?limit=100')}
+  else if(!successLaunch && !successLand){seturl(`https://api.spacexdata.com/v3/launches?limit=100`)}
 }, [successLaunch,successLand])
 
   return (
     <>
-    <div className = "top">
+    <div id= "header" className = "top" onMouseLeave = {() => {setnavToggle(!navToggle)}}>
      <form onSubmit = {formControlYear}> 
         <TextField className = "year" id="outlined-basic" label="Launch Year" variant="outlined"  onChange = {(e)=> {setlaunchYr(e.target.value);}} />
      </form>
-    <ToggleButton value="Success Land" selected={successLand} onChange={() => {setsuccessLand(!successLand)}} > Success Land </ToggleButton> 
+    <ToggleButton  value="Success Land" selected={successLand} onChange={() => {setsuccessLand(!successLand)}} > Success Land </ToggleButton> 
    <ToggleButton value="Success Launch" selected={successLaunch} onChange={() => {setsuccessLaunch(!successLaunch)}} > Success Launch </ToggleButton> 
      </div>
     <div className = "mobile">

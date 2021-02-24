@@ -1,25 +1,35 @@
+/* *{background-color: #f4f9f9;} */
+
 .mobile{display: none;}
 
-
-.top{top:0px;right: 0px;display: flex;
-position: fixed;
-background: white;
+.top{
+    top:0px;
+    margin: auto;
+    align-self: auto;
+    display: flex;
+    position: fixed;
+    background: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
 
-@media (max-width : 990px) {
+.desktop{
+    margin-top: 3rem;
+}
+
+@media (max-width : 500px) {
     .desktop{display: none;}
-    .mobile{display: block;}
+    .mobile{
+        display: block;
+        margin-top: 6rem;
+    }
     
 .top{
     display: flex;
+    flex-direction: row;
     justify-content: safe;
     position: fixed;
-    top: auto;
-    bottom: 0px;
-    background: white; 
-
-     
+    top: 0px;
+    background: white;   
 }
 }

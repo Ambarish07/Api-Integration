@@ -1,4 +1,5 @@
 import React, { useEffect,useState } from "react";
+import MobileView from "./mobileview.js";
 import {ToggleButton} from "@material-ui/lab";
 import { TextField } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
@@ -21,6 +22,7 @@ const [successLand, setsuccessLand] = useState(false);
         <TableCell>{row.flight_number}</TableCell>
         <TableCell>{row.launch_year}</TableCell>
         <TableCell>{row.mission_name}</TableCell>
+        <TableCell><img src = {row.links.mission_patch} width= "100" height = "100" /></TableCell>
         <TableCell>{row.details}</TableCell>
       </TableRow>
     );
@@ -40,7 +42,7 @@ useEffect(() => {
 
     if(launchYr){ 
     // console.log(launchYr);
-      seturl(`https://api.spacexdata.com/v3/launches?limit=100&launch_success=true&land_success=true&launch_year=${launchYr}`);
+      seturl(`https://api.spacexdata.com/v3/launches?limit=100&launch_year=${launchYr}`);
     }
     else{
       seturl("https://api.spaceXdata.com/v3/launches?limit=100");
@@ -60,30 +62,49 @@ useEffect(() => {
 }, [successLaunch,successLand])
 
   return (
-    <div className="App">
-      <div className = "top">
+    <>
+    <div className = "top">
      <form onSubmit = {formControlYear}> 
         <TextField className = "year" id="outlined-basic" label="Launch Year" variant="outlined"  onChange = {(e)=> {setlaunchYr(e.target.value);}} />
      </form>
     <ToggleButton value="Success Land" selected={successLand} onChange={() => {setsuccessLand(!successLand)}} > Success Land </ToggleButton> 
    <ToggleButton value="Success Launch" selected={successLaunch} onChange={() => {setsuccessLaunch(!successLaunch)}} > Success Launch </ToggleButton> 
      </div>
+    <div className = "mobile">
+
+      <MobileView data = {data} setdata = {setdata}/>
+    </div>
+
+
+    <div className = "desktop">
+      
      <Table>
        <TableHead>
        <TableRow>
          <TableCell>FLIGHT NO</TableCell> 
          <TableCell>LAUNCH YEAR</TableCell>
          <TableCell>MISSION NAME</TableCell>
+         <TableCell>IMAGE</TableCell>
          <TableCell>MISSION DETAILS</TableCell>
 
         </TableRow>
         </TableHead>
         <TableBody>
          {data.map(createDiv)}
-         {!data.length && setdata([{flight_number : "no items" , launch_year: "no items",rocket:{rocket_name: "no items"},launch_date_utc: "no items"}])}
+         {!data.length && setdata([{
+           flight_number : "no items" ,
+          launch_year: "no items",
+          links:{
+            mission_patch:"no item"
+          },
+          rocket:{rocket_name: "no item"},
+          details:"no items",
+          mission_name:"no items",
+          } ])}
         </TableBody>
       </Table>
     </div>
+    </>
   );
 }
 

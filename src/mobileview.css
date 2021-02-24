@@ -1,0 +1,19 @@
+.card{
+    /* display: flex; */
+    margin: auto;
+    /* border: 2px solid rgb(14, 14, 14); */
+    padding: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 18rem;
+    margin-top: 15px;
+
+}
+
+.mobileview{
+    align-items: center;
+}
+
+.top-m{
+    display: flex;
+justify-content: space-around;
+}
